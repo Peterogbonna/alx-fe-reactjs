@@ -1,25 +1,13 @@
-// src/App.jsx
 import './App.css';
-
-// Import the new components
-import UserProfile from './components/UserProfile';
+import Counter from './components/Counter';
 
 function App() {
   return (
     <>
-     {/* Example User Profile */}
-     <UserProfile
-     name="Alice"
-     age="25"
-     bio="Loves hiking and photography"
-    />
-
-    <UserProfile 
-     name="John"
-     age="30"
-     bio="A passionate web developer and traveler"
-    />
-  </>
+      <h1>My React App</h1>
+      {/* Counter component */}
+      <Counter />
+    </>
   );
 }
 
