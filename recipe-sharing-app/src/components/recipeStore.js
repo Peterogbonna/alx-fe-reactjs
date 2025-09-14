@@ -5,7 +5,7 @@ export const useRecipeStore = create((set, get) => ({
   favorites: [],
   recommendations: [],
 
-  // Recipes
+  // CRUD
   addRecipe: (recipe) =>
     set((state) => ({ recipes: [...state.recipes, recipe] })),
 
@@ -19,7 +19,7 @@ export const useRecipeStore = create((set, get) => ({
   deleteRecipe: (id) =>
     set((state) => ({
       recipes: state.recipes.filter((r) => r.id !== id),
-      favorites: state.favorites.filter((fid) => fid !== id), // clean up favorites
+      favorites: state.favorites.filter((fid) => fid !== id), // remove from favorites too
     })),
 
   // Favorites
@@ -33,7 +33,7 @@ export const useRecipeStore = create((set, get) => ({
       favorites: state.favorites.filter((id) => id !== recipeId),
     })),
 
-  // Recommendations (mock: pick random from favorites-related)
+  // Recommendations
   generateRecommendations: () => {
     const { recipes, favorites } = get();
     const recommended = recipes.filter(
