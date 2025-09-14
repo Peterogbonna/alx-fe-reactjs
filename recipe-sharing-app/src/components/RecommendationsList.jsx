@@ -7,6 +7,7 @@ const RecommendationsList = () => {
     (state) => state.generateRecommendations
   );
 
+  // Run generator whenever component mounts
   useEffect(() => {
     generateRecommendations();
   }, [generateRecommendations]);
