@@ -1,3 +1,5 @@
+import { getUser } from "./services/githubApi";
+
 function App() {
   return (
     <div style={{ padding: "2rem" }}>
