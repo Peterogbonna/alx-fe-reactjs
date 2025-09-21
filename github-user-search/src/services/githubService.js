@@ -1,16 +1,16 @@
 import axios from "axios";
 
-const BASE_URL = "https://api.github.com/users/";
+const BASE_URL = "https//api.github.com";
 
-export const fetchUserData = async (username) => {
-    try {
-        const response = await axios.get(`${BASE_URL}${username}`, {
-            headers: {
-                Authorization: `token ${import.meta.env.VITE_APP_GITHUB_API_KEY || ""}`,
-            },
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+export const advancedUserSearch = async (username, location, minRepos) => {
+    let query = [];
+
+    if (username) query.push(`${username} in:login`);
+    if (location) query.push(`location:${location}`);
+    if (minRepos) query.push(`repos:>=${minRepos}`);
+
+    const queryString = query.join(" ");
+    
+    const response = await axios.get(`${BASE_URL}/search/users?q=${queryString}`);
+    return response.data;
 };
