@@ -1,39 +1,49 @@
 import { useState } from "react";
-import SearchBar from "./components/SearchBar";
-import { getUser } from "./services/githubApi";
+import Search from "./components/Search";
+import { fetchUserData } from "./services/githubService";
 
 function App() {
-  const [username, setUsername] = useState("");
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSearch = async () => {
+  const handleSearch = async (username) => {
+    setLoading(true);
+    setError("");
+    setUserData(null);
+
     try {
-      setError("");
-      const data = await getUser(username);
+      const data = await fetchUserData(username);
       setUserData(data);
     } catch {
-      setError("User not found!");
-      setUserData(null);
+      setError("Looks like we can't find the user");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div style={{ padding: "2rem" }}>
       <h1>GitHub User Search App</h1>
-      <SearchBar
-        username={username}
-        setUsername={setUsername}
-        onSearch={handleSearch}
-      />
 
+      {/* Search form */}
+      <Search onSearch={handleSearch} />
+
+      {/* Conditional rendering */}
+      {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       {userData && (
-        <div>
-          <h2>{userData.name}</h2>
-          <img src={userData.avatar_url} alt="avatar" width={100} />
-          <p>{userData.bio}</p>
-          <a href={userData.html_url} target="_blank">View Profile</a>
+        <div style={{ marginTop: "1rem" }}>
+          <img
+            src={userData.avatar_url}
+            alt="avatar"
+            width={100}
+            style={{ borderRadius: "50%" }}
+          />
+          <h2>{userData.name || "No name available"}</h2>
+          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
+            View Profile
+          </a>
         </div>
       )}
     </div>
