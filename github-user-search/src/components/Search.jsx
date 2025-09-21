@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { advancedUserSearch } from "../services/githubService";
+import { fetchUserData, advancedUserSearch } from "../services/githubService";
 
 function Search() {
   const [username, setUsername] = useState("");
   const [location, setLocation] = useState("");
   const [minRepos, setMinRepos] = useState("");
-  const [users, setUsers] = useState([]);
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -19,13 +19,23 @@ function Search() {
 
     setLoading(true);
     setError("");
-    setUsers([]);
+    setResults([]);
 
     try {
-      const data = await advancedUserSearch(username, location, minRepos);
-      setUsers(data.items || []);
+      let data;
+
+      // ✅ If only username is provided → fetch single user
+      if (username && !location && !minRepos) {
+        const user = await fetchUserData(username);
+        data = { items: [user] }; // wrap in items array for consistency
+      } else {
+        // ✅ Otherwise → advanced search
+        data = await advancedUserSearch(username, location, minRepos);
+      }
+
+      setResults(data.items || []);
     } catch {
-      setError("Something went wrong while fetching users");
+      setError("Looks like we cant find the user");
     } finally {
       setLoading(false);
     }
@@ -70,9 +80,9 @@ function Search() {
       {/* Results */}
       {loading && <p className="text-center">Loading...</p>}
       {error && <p className="text-center text-red-500">{error}</p>}
-      {!loading && users.length > 0 && (
+      {!loading && results.length > 0 && (
         <div className="grid gap-4">
-          {users.map((user) => (
+          {results.map((user) => (
             <div
               key={user.id}
               className="flex items-center p-4 border rounded-lg shadow-sm bg-white"
