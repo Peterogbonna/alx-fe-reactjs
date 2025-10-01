@@ -1,12 +1,6 @@
-// tailwind.config.js
-
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  // Configure files to scan for Tailwind classes (for purging unused CSS)
-  content: [
-    './index.html', // Important for Vite's main HTML file
-    './src/**/*.{js,jsx,ts,tsx}', 
-  ],
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  darkMode: false, // You can set it to 'media' or 'class' if needed
   theme: {
     extend: {},
   },
