@@ -1,33 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import RecipeList from './components/RecipeList';
-import RecipeDetails from './components/RecipeDetails';
-import AddRecipeForm from './components/AddRecipeForm';
-import SearchBar from './components/SearchBar';
-import FavoritesList from './components/FavoritesList';
-import RecommendationsList from './components/RecommendationsList';
+// src/App.jsx
+
+import UserProfile from './components/UserProfile'; 
 
 function App() {
   return (
-    <Router>
-      <div>
-        <h1>Recipe Sharing App</h1>
-        <SearchBar />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div>
-                <AddRecipeForm />
-                <RecipeList />
-                <FavoritesList />
-                <RecommendationsList />
-              </div>
-            }
-          />
-          <Route path="/recipes/:id" element={<RecipeDetails />} />
-        </Routes>
-      </div>
-    </Router>
+    // Test the blue background and large padding.
+    <div className="bg-blue-100 p-10">
+      <h1 className="text-3xl font-bold text-red-600">Tailwind is Working!</h1>
+      {/* Include your UserProfile component here */}
+      <UserProfile /> 
+    </div>
   );
 }
 
