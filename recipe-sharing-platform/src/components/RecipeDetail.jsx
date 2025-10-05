@@ -1,7 +1,7 @@
-import { useParams, Link, useSearchParams } from "react-router-dom";
-import ( useState, useEffect ) from "react"
+import { useParams, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import data from "../data.json";
-import { useEffect, useState } from "react";
+
 
 function RecipeDetail() {
   const { id } = useParams();
