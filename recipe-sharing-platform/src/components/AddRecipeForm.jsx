@@ -3,32 +3,48 @@ import { useState } from "react";
 function AddRecipeForm() {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [steps, setSteps] = useState(""); // ✅ renamed from instructions
-  const [error, setError] = useState("");
+  const [steps, setSteps] = useState("");
+  const [errors, setErrors] = useState({}); // ✅ required
   const [success, setSuccess] = useState("");
 
+  // ✅ Validation function
+  const validate = () => {
+    const newErrors = {};
+
+    if (!title.trim()) {
+      newErrors.title = "Recipe title is required.";
+    }
+
+    if (!ingredients.trim()) {
+      newErrors.ingredients = "Ingredients are required.";
+    } else {
+      const ingredientsArray = ingredients.split(",").map((i) => i.trim());
+      if (ingredientsArray.length < 2) {
+        newErrors.ingredients =
+          "Please include at least two ingredients separated by commas.";
+      }
+    }
+
+    if (!steps.trim()) {
+      newErrors.steps = "Preparation steps are required.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // ✅ Handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
     setSuccess("");
 
-    // 🧠 Simple validation
-    if (!title || !ingredients || !steps) {
-      setError("All fields are required!");
-      return;
-    }
-
-    const ingredientsArray = ingredients.split(",").map((item) => item.trim());
-    if (ingredientsArray.length < 2) {
-      setError("Please include at least two ingredients separated by commas.");
-      return;
-    }
+    if (!validate()) return; // ✅ use validate()
 
     const newRecipe = {
       id: Date.now(),
       title,
-      ingredients: ingredientsArray,
-      steps: steps.split(".").map((step) => step.trim()), // ✅ steps array
+      ingredients: ingredients.split(",").map((item) => item.trim()),
+      steps: steps.split(".").map((step) => step.trim()),
     };
 
     console.log("New Recipe Added:", newRecipe);
@@ -36,6 +52,7 @@ function AddRecipeForm() {
     setTitle("");
     setIngredients("");
     setSteps("");
+    setErrors({});
   };
 
   return (
@@ -48,9 +65,6 @@ function AddRecipeForm() {
           Add New Recipe
         </h2>
 
-        {error && (
-          <p className="text-red-500 text-center mb-4 font-medium">{error}</p>
-        )}
         {success && (
           <p className="text-green-600 text-center mb-4 font-medium">
             {success}
@@ -69,6 +83,9 @@ function AddRecipeForm() {
             placeholder="Enter recipe title"
             className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
+          {errors.title && (
+            <p className="text-red-500 text-sm mt-1">{errors.title}</p>
+          )}
         </div>
 
         {/* Ingredients Field */}
@@ -82,6 +99,9 @@ function AddRecipeForm() {
             placeholder="e.g. Eggs, Flour, Sugar"
             className="w-full border border-gray-300 rounded-lg p-3 h-24 focus:outline-none focus:ring-2 focus:ring-blue-400"
           ></textarea>
+          {errors.ingredients && (
+            <p className="text-red-500 text-sm mt-1">{errors.ingredients}</p>
+          )}
         </div>
 
         {/* Steps Field */}
@@ -95,6 +115,9 @@ function AddRecipeForm() {
             placeholder="Write each step separated by a period."
             className="w-full border border-gray-300 rounded-lg p-3 h-32 focus:outline-none focus:ring-2 focus:ring-blue-400"
           ></textarea>
+          {errors.steps && (
+            <p className="text-red-500 text-sm mt-1">{errors.steps}</p>
+          )}
         </div>
 
         {/* Submit Button */}
