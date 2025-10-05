@@ -3,7 +3,7 @@ import { useState } from "react";
 function AddRecipeForm() {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
+  const [steps, setSteps] = useState(""); // ✅ renamed from instructions
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -13,7 +13,7 @@ function AddRecipeForm() {
     setSuccess("");
 
     // 🧠 Simple validation
-    if (!title || !ingredients || !instructions) {
+    if (!title || !ingredients || !steps) {
       setError("All fields are required!");
       return;
     }
@@ -28,14 +28,14 @@ function AddRecipeForm() {
       id: Date.now(),
       title,
       ingredients: ingredientsArray,
-      instructions: instructions.split(".").map((step) => step.trim()),
+      steps: steps.split(".").map((step) => step.trim()), // ✅ steps array
     };
 
     console.log("New Recipe Added:", newRecipe);
     setSuccess("Recipe added successfully!");
     setTitle("");
     setIngredients("");
-    setInstructions("");
+    setSteps("");
   };
 
   return (
@@ -84,14 +84,14 @@ function AddRecipeForm() {
           ></textarea>
         </div>
 
-        {/* Instructions Field */}
+        {/* Steps Field */}
         <div className="mb-5">
           <label className="block text-gray-700 font-semibold mb-2">
             Preparation Steps
           </label>
           <textarea
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
             placeholder="Write each step separated by a period."
             className="w-full border border-gray-300 rounded-lg p-3 h-32 focus:outline-none focus:ring-2 focus:ring-blue-400"
           ></textarea>
