@@ -63,6 +63,17 @@ const RegistrationForm = () => {
         </div>
 
         <div>
+            <label className="block mb-1">Value:</label>
+            <input
+               type="value"
+               name="value"
+               className="w-full p-2 border rounded"
+               value={formData.value}
+               onChange={handleChange}
+            />
+        </div>
+
+        <div>
           <label className="block mb-1">Password:</label>
           <input
             type="password"
