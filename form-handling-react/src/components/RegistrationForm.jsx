@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const RegistrationForm = () => {
+  // Define form state
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -10,17 +11,18 @@ const RegistrationForm = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    // Basic validation
     if (!formData.username || !formData.email || !formData.password) {
       setError("All fields are required!");
       return;
@@ -44,7 +46,7 @@ const RegistrationForm = () => {
             type="text"
             name="username"
             className="w-full p-2 border rounded"
-            value={formData.username}
+            value={formData.username}  {/* ✅ controlled value */}
             onChange={handleChange}
           />
         </div>
@@ -55,7 +57,7 @@ const RegistrationForm = () => {
             type="email"
             name="email"
             className="w-full p-2 border rounded"
-            value={formData.email}
+            value={formData.email}  {/* ✅ controlled value */}
             onChange={handleChange}
           />
         </div>
@@ -66,7 +68,7 @@ const RegistrationForm = () => {
             type="password"
             name="password"
             className="w-full p-2 border rounded"
-            value={formData.password}
+            value={formData.password}  {/* ✅ controlled value */}
             onChange={handleChange}
           />
         </div>
