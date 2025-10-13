@@ -1,36 +1,27 @@
 import { useState } from "react";
 
 const RegistrationForm = () => {
-  // Define form state
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  // Separate state variables
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    if (!formData.username || !formData.email || !formData.password) {
+    if (!username || !email || !password) {
       setError("All fields are required!");
       return;
     }
 
     // Simulate API call
-    console.log("Form submitted:", formData);
-    setSuccess("User registered successfully!");
+    console.log("Form submitted:", { username, email, password });
+    setSuccess("User registere successfully!");
   };
 
   return (
@@ -46,8 +37,8 @@ const RegistrationForm = () => {
             type="text"
             name="username"
             className="w-full p-2 border rounded"
-            value={formData.username}  {/* ✅ controlled value */}
-            onChange={handleChange}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
 
@@ -57,8 +48,8 @@ const RegistrationForm = () => {
             type="email"
             name="email"
             className="w-full p-2 border rounded"
-            value={formData.email}  {/* ✅ controlled value */}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -68,8 +59,8 @@ const RegistrationForm = () => {
             type="password"
             name="password"
             className="w-full p-2 border rounded"
-            value={formData.password}  {/* ✅ controlled value */}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
