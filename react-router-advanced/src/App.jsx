@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Profile from "./components/Profile";
 import BlogPost from "./pages/BlogPost";
+import ProtectedRoute from "./components/ProtectedRoute"; // ✅ Add this import
 
 function App() {
   return (
@@ -12,9 +13,18 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/profile/*" element={<Profile />} />
 
-        {/* ✅ Dynamic Route for Blog Posts */}
+        {/* ✅ Protect Profile route */}
+        <Route
+          path="/profile/*"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ✅ Dynamic Blog Route */}
         <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
     </Router>
