@@ -1,33 +1,28 @@
 import { useState } from "react";
 
 const RegistrationForm = () => {
-  // Separate state variables for controlled inputs
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState(""); // ✅ matches checker keyword
+  const [errors, setErrors] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors("");
 
-    // Individual field checks (checker looks for these!)
     if (!username) {
       setErrors("Username is required!");
       return;
     }
-
     if (!email) {
       setErrors("Email is required!");
       return;
     }
-
-    if (!password) {
+    if *!password) {
       setErrors("Password is required!");
       return;
     }
 
-    // Simulated API call
     console.log("Form submitted:", { username, email, password });
     alert("User registered successfully!");
   };
@@ -71,7 +66,6 @@ const RegistrationForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
         {errors && <p className="text-red-500 text-sm">{errors}</p>}
 
         <button
@@ -83,6 +77,6 @@ const RegistrationForm = () => {
       </form>
     </div>
   );
-};
+}
 
 export default RegistrationForm;

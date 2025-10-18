@@ -34,17 +34,29 @@ function FormikForm() {
           <Form>
             <div>
               <Field type="text" name="username" placeholder="Username" />
-              <ErrorMessage name="username" component="div" style={{ color: "red" }} />
+              <ErrorMessage
+                name="username"
+                component="div"
+                style={{ color: "red" }}
+              />
             </div>
 
             <div>
               <Field type="email" name="email" placeholder="Email" />
-              <ErrorMessage name="email" component="div" style={{ color: "red" }} />
+              <ErrorMessage
+                name="email"
+                component="div"
+                style={{ color: "red" }}
+              />
             </div>
 
             <div>
               <Field type="password" name="password" placeholder="Password" />
-              <ErrorMessage name="password" component="div" style={{ color: "red" }} />
+              <ErrorMessage
+                name="password"
+                component="div"
+                style={{ color: "red" }}
+              />
             </div>
 
             <button type="submit">Register</button>
