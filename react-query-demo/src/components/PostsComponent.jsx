@@ -18,6 +18,12 @@ function PostsComponent() {
   } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
+
+    // ✅ Advanced React Query options
+    staleTime: 10000, // Data stays fresh for 10 seconds
+    cacheTime: 300000, // Data remains in cache for 5 minutes
+    refetchOnWindowFocus: false, // Don’t refetch when window gains focus
+    keepPreviousData: true, // Keep previous data while refetching
   });
 
   if (isLoading) return <p>Loading posts...</p>;
@@ -25,10 +31,12 @@ function PostsComponent() {
 
   return (
     <div>
+      <h2>Posts</h2>
       <button onClick={() => refetch()} disabled={isFetching}>
         {isFetching ? "Refreshing..." : "Refetch Posts"}
       </button>
-      <ul>
+
+      <ul style={{ marginTop: "20px" }}>
         {posts.slice(0, 10).map((post) => (
           <li key={post.id}>
             <strong>{post.title}</strong>
